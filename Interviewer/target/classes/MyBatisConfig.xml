@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <properties resource="jdbc.properties"/>
+    <settings>
+        <!--自动命名转换-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--log4j-->
+        <setting name="logImpl" value="slf4j"/>
+    </settings>
+    <typeAliases>
+        <!-- <typeAlias type="com.zxk.domain.Course" alias="course"/>-->
+        <package name="com.zxk.domain"/>
+    </typeAliases>
+
+    <!--配置分页插件，plugins标签有出现顺序要求，必须在environments之前，同时要在properties和typeAliases之后 -->
+    <plugins>
+        <!-- com.github.pagehelper.PageInterceptor -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="helperDialect" value="mysql" />
+            <property name="reasonable" value="true" />
+        </plugin>
+    </plugins>
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <package name="com.zxk.mapper"/>
+    </mappers>
+</configuration>
